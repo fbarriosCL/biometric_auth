@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :update, :destroy]
+  before_action :checking_login, only: [:authentication_user]
 
   # GET /users
   def index
@@ -38,7 +39,22 @@ class UsersController < ApplicationController
     @user.destroy
   end
 
+  def authentication_user
+    if @user && @user.authentication_by_image(params[:image])
+      render json: { message:'OK' }, status: :ok
+    else
+      render json: { message:'No Autorizado' }, status: :unauthorized
+    end
+  end
+
   private
+
+    # Callbacks for validate params and if exists users
+    def checking_login
+      return [] unless params[:email].present? && params[:image].present?
+      @user = User.find_by_email(params[:email])
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find(params[:id])
