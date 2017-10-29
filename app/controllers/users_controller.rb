@@ -51,7 +51,7 @@ class UsersController < ApplicationController
 
     # Callbacks for validate params and if exists users
     def checking_login
-      return [] unless params[:email].present? && params[:image].present?
+      return [] unless params[:image].present?
       @user = User.find_by_email(params[:email])
     end
 
