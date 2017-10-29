@@ -40,7 +40,7 @@ class UsersController < ApplicationController
   end
 
   def authentication_user
-    if @user && @user.authentication_by_image(params[:image])
+    if @user && @user.authentication_by_image(params['user']['image'])
       render json: { message:'OK' }, status: :ok
     else
       render json: { message:'No Autorizado' }, status: :unauthorized
@@ -48,11 +48,10 @@ class UsersController < ApplicationController
   end
 
   private
-
     # Callbacks for validate params and if exists users
     def checking_login
-      return [] unless params[:image].present?
-      @user = User.find_by_email(params[:email])
+      return [] unless params['user']['image'].present?
+      @user = User.find_by_email(params['user']['email'])
     end
 
     # Use callbacks to share common setup or constraints between actions.
