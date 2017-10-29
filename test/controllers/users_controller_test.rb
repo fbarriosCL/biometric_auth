@@ -35,4 +35,14 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
     assert_response 204
   end
+
+  test "should login with success" do
+    post login_url, params: { email: @user.email, image: @user.image }, as: :json
+    assert_response 200
+  end
+
+  test "not login" do
+    post login_url, params: { email: @user.email, image: 'oqkqqwjdiusnas' }, as: :json
+    assert_response 401
+  end
 end
