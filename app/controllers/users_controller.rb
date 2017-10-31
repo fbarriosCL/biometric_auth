@@ -41,8 +41,10 @@ class UsersController < ApplicationController
 
   def authentication_user
     if @user && @user.authentication_by_image(params['user']['image'])
+      ApplicationJob.perform_later(@user, request.user_agent, true)
       render json: { message:'OK' }, status: :ok
     else
+      ApplicationJob.perform_later(params['user']['email'], params['user']['referer'], false)
       render json: { message:'No Autorizado' }, status: :unauthorized
     end
   end
@@ -61,6 +63,6 @@ class UsersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def user_params
-      params.require(:user).permit(:email, :image)
+      params.require(:user).permit(:email, :image, :referer)
     end
 end
