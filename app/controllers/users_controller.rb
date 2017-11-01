@@ -41,7 +41,7 @@ class UsersController < ApplicationController
 
   def authentication_user
     if @user && @user.authentication_by_image(params['user']['image'])
-      ApplicationJob.perform_later(@user, request.user_agent, true)
+      ApplicationJob.perform_later(@user.email, params['user']['referer'], true)
       render json: { message:'OK' }, status: :ok
     else
       ApplicationJob.perform_later(params['user']['email'], params['user']['referer'], false)
