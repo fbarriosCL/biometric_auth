@@ -1,6 +1,6 @@
 # BIOMETRIC AUTH
 
-(Biometric auth)[https://biometric-auth.herokuapp.com] is a service that manager users and their authentication.
+[Biometric auth](https://biometric-auth.herokuapp.com) is a service that manager users and their authentication.
 
 ## Development
 
@@ -33,7 +33,7 @@ networks:
     driver: bridge
 ```
 
-Then add `biometric-client.dockerapp.com` to your `/etc/hosts` file pointing to your
+Then add `biometric-auth.dockerapp.com` to your `/etc/hosts` file pointing to your
 docker host.
 
 ### Installation
